@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.0.1/Tone.min.js"></script>
+        <script>
+            // create a new synth and route the output to master
+            const synth = new Tone.MembraneSynth().toMaster();
+            let playing = false;
+
+            function playSynth() {
+                // play a note with the synth we setup
+                synth.triggerAttackRelease("C2", "8n");
+            }
+
+            const loop = new Tone.Loop(function(time) {
+                //triggered every eighth note.
+                synth.triggerAttackRelease("C2", "2n");
+                // synth.triggerAttackRelease("E4", "4n");
+            }, "2n").start(0);
+
+            function playLoop() {
+                if (!playing) {
+                    Tone.Transport.start();
+                    playing = true;
+                } else {
+                    Tone.Transport.stop();
+                    playing = false;
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+            onclick="playSynth()">
+            <i class="material-icons">music_note</i>
+            Play Synth
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+            onclick="playLoop()">
+            <i class="material-icons">music_note</i>
+            Play Loop
+        </button>
+    </body>
+</html>
